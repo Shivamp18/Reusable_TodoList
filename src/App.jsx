@@ -1,17 +1,23 @@
 import React from 'react';
 import { useState } from 'react';
-import TaskList from './components/TaskList';
 import FilterButtons from './components/FilterButtons';
+import TaskList from './components/TaskList';
+import useLocalStorage from './hooks/useLocalStorage';
+
+
+
 
 const App = () => {
 
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useLocalStorage("todos",[]);
   const [newTask, setNewTask] = useState('');
   const [filter, setFilter] = useState('all');
 
   const addTodo = () => {
-    if (newTask.trim() === "") return;
-
+    if (newTask.trim() === ""){ 
+      alert("Task cannot be empty!");
+      return;
+    }
     const isDuplicate = todos.some(
       (todo) => todo.text.toLowerCase() === newTask.trim().toLowerCase()
     );
@@ -77,6 +83,7 @@ const App = () => {
 
         </div>
 
+       
         <FilterButtons currentFilter={filter} setFilter={setFilter} />
         <TaskList todos={filteredTodos} onToggle={toggleTodo} onDelete={deleteTodo} />
 
@@ -88,3 +95,11 @@ const App = () => {
 }
 
 export default App;
+
+
+
+
+
+
+
+
