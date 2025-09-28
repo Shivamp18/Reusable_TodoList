@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import FilterButtons from './components/FilterButtons';
 import TaskList from './components/TaskList';
 import useLocalStorage from './hooks/useLocalStorage';
+import ErrorMessage from './components/ErrorMessage';
 
 
 
 
 const App = () => {
 
-  const [todos, setTodos] = useLocalStorage("todos",[]);
+  const [todos, setTodos] = useLocalStorage("todos", []);
   const [newTask, setNewTask] = useState('');
   const [filter, setFilter] = useState('all');
+  const [error, setError] = useState('');
 
   const addTodo = () => {
-    if (newTask.trim() === ""){ 
-      alert("Task cannot be empty!");
+    if (newTask.trim() === "") {
+      setError("Task cannot be empty!");
       return;
     }
     const isDuplicate = todos.some(
@@ -23,7 +25,7 @@ const App = () => {
     );
 
     if (isDuplicate) {
-      alert("Task already exists!");
+      setError("Task already exists!");
       return;
     }
 
@@ -68,9 +70,8 @@ const App = () => {
           <input
             type="text"
             value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
+            onChange={(event) => { setNewTask(event.target.value); setError(null); }}
             className="border p-2 flex-1 rounded bg-white"
-
             placeholder="Enter a task"
           />
 
@@ -80,10 +81,9 @@ const App = () => {
           >
             Add
           </button>
-
         </div>
 
-       
+        <ErrorMessage message={error} />
         <FilterButtons currentFilter={filter} setFilter={setFilter} />
         <TaskList todos={filteredTodos} onToggle={toggleTodo} onDelete={deleteTodo} />
 

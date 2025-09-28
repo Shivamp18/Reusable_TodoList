@@ -1,22 +1,34 @@
 import { useState } from "react";
 
 
-function useLocalStorage(key, initialValue){
-   
-const [name, setName] = useState(() => getKey());
+function useLocalStorage(key, initialValue) {
 
-    function setKey(value){
-      setName(value)
-       localStorage.setItem(key,JSON.stringify(value));
+  const [name, setName] = useState(() => getKey());
 
+  function setKey(value) {
+    setName(value)
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error("Error in saving to localStorage", error);
     }
 
-    function getKey(){
-        const names = localStorage.getItem(key);
-        return names ? JSON.parse(names) : initialValue;
-}
 
-return [name, setKey]
+  }
+
+  function getKey() {
+    try {
+      const names = localStorage.getItem(key);
+      return names ? JSON.parse(names) : initialValue;
+    } catch (error) {
+      console.error("Error in reading from localStorage", error);
+      return initialValue;
+    }
+
+
+  }
+
+  return [name, setKey]
 
 }
 
