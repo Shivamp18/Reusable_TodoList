@@ -8,6 +8,7 @@ import ErrorMessage from './components/ErrorMessage';
 
 
 
+
 const App = () => {
 
   const [todos, setTodos] = useLocalStorage("todos", []);
@@ -33,6 +34,12 @@ const App = () => {
       id: Date.now(),
       text: newTask.trim(),
       completed: false,
+      timeStamp: new Date().toLocaleDateString("en-US", {
+        weekday: 'short',
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric'
+      })
     };
     setTodos([...todos, newTodo]);
     setNewTask("");
@@ -60,24 +67,25 @@ const App = () => {
   });
 
 
+
   return (
 
-    <div className='flex justify-center align-center max-h-screen'>
-      <div className='w-full max-w-md p-6 rounded-xl shadow-lg mt-20 bg-amber-100'>
-        <h1 className='text-2xl font-bold mb-4 text-center'>Todo App</h1>
+    <div>
+      <h1 className='font-bold p-6 text-center' style={{ fontSize: "65px", background: "linear-gradient(to right, rgb(0 37 108), rgb(206 229 234), rgb(-2, 60, 181))" }}>Todo App</h1>
+      <div className='p-6 rounded-xl shadow-lg  w-full bg-blue-50 min-h-screen'>
 
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-2 mb-4 justify-center">
           <input
             type="text"
             value={newTask}
             onChange={(event) => { setNewTask(event.target.value); setError(null); }}
-            className="border p-2 flex-1 rounded bg-white"
+            className="border p-2 rounded bg-white w-90"
             placeholder="Enter a task"
           />
 
           <button
             onClick={addTodo}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer"
           >
             Add
           </button>
@@ -88,8 +96,12 @@ const App = () => {
         <TaskList todos={filteredTodos} onToggle={toggleTodo} onDelete={deleteTodo} />
 
 
+
       </div>
     </div>
+
+
+
 
   )
 }

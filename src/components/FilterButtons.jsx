@@ -1,9 +1,9 @@
 function FilterButtons({ currentFilter, setFilter }) {
   return (
-    <div className="flex gap-2 mb-4">
+    <div className="flex gap-0.5 mt-15 mb-20 justify-center text-lg">
       <button
         onClick={() => setFilter("all")}
-        className={`px-3 py-1 rounded ${currentFilter === "all" ? "bg-blue-600 text-white" : "bg-gray-200"
+        className={`cursor-pointer px-3 py-1 rounded-l ${currentFilter === "all" ? "bg-blue-600 text-white" : "bg-gray-200"
           }`}
       >
         All
@@ -11,7 +11,7 @@ function FilterButtons({ currentFilter, setFilter }) {
 
       <button
         onClick={() => setFilter("completed")}
-        className={`px-3 py-1 rounded ${currentFilter === "completed" ? "bg-green-600 text-white" : "bg-gray-200"
+        className={`cursor-pointer px-3 py-1 ${currentFilter === "completed" ? "bg-green-600 text-white" : "bg-gray-200"
           }`}
       >
         Completed
@@ -19,7 +19,7 @@ function FilterButtons({ currentFilter, setFilter }) {
 
       <button
         onClick={() => setFilter("pending")}
-        className={`px-3 py-1 rounded ${currentFilter === "pending" ? "bg-yellow-600 text-white" : "bg-gray-200"
+        className={`cursor-pointer px-3 py-1 rounded-r ${currentFilter === "pending" ? "bg-yellow-600 text-white" : "bg-gray-200"
           }`}
       >
         Pending
